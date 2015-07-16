@@ -1,0 +1,9 @@
+---
+
+- name: install consul-template config for haproxy
+  template: src=consul-template-hap.conf.j2 dest=/etc/consul-template/haproxy.conf
+
+- name: install haproxy config template
+  copy: src=haproxy.cmtpl dest=/etc/haproxy/haproxy.cmtpl
+  notify:
+    - reload consul-template

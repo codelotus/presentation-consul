@@ -1,0 +1,7 @@
+---
+
+- name: reload consul
+  service: name=consul state=reloaded
+
+- name: restart river
+  service: name=river state=restarted

@@ -1,0 +1,6 @@
+---
+- name: Configure App Server
+  hosts: tag_role_appserverA:tag_role_appserverB
+  sudo: true
+  roles:
+    - river

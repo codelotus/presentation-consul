@@ -1,0 +1,6 @@
+---
+- name: Configure Ansible Clients
+  hosts: tag_role_consul_client
+  sudo: true
+  roles:
+    - consul

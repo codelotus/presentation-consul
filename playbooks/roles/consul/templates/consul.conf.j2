@@ -1,0 +1,31 @@
+{
+  "datacenter": "{{ acl_datacenter }}",
+  "data_dir": "/opt/consul",
+  "ui_dir": "/opt/consul/ui/dist",
+  "bind_addr": "{{ ansible_eth1.ipv4.address }}",
+  "encrypt": "EZ3ar4q9m8MR4FLEfWFsUw==",
+  "start_join": [
+      {%- for host in groups['tag_role_consul_server'] -%}
+        {%- if loop.last -%}
+          "{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}"
+        {%- else -%}
+          "{{ hostvars[host]['ansible_eth1']['ipv4']['address'] }}",
+        {%- endif %}
+      {%- endfor -%}
+    ],
+  {% if is_server: %}
+    "bootstrap_expect": {{ groups['tag_role_consul_server'] | length }},
+  {% endif %}
+  "ca_file": "{{ ssl_ca_cert }}",
+  "cert_file": "{{ ssl_host_cert }}",
+  "key_file": "{{ ssl_host_key }}",
+  "disable_update_check": true,
+  "log_level": "INFO",
+  "server": {{ is_server|lower }},
+  {%- if is_server %}
+  "acl_datacenter": "{{ acl_datacenter }}",
+  "acl_master_token": "{{ acl_master_token }}",
+  {% endif -%}
+  "verify_incoming": true,
+  "verify_outgoing": true
+}

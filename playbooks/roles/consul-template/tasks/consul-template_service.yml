@@ -1,0 +1,4 @@
+---
+  
+- name: ensure consul-template is started
+  service: name=consul-template state=started

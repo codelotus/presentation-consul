@@ -1,0 +1,12 @@
+---
+
+- name: ensure haproxy service is started
+  service: name=haproxy state=started
+
+- name: upload haproxy consul check script
+  template: src=check_haproxy.sh.j2 dest=/opt/consul_checks/check_haproxy.sh owner=consul group=consul mode=0755
+
+- name: upload haproxy consul service config
+  template: src=haproxy_consul.json.j2 dest=/etc/consul.d/haproxy_consul.json owner=consul group=consul mode=0664
+  notify:
+    - reload consul

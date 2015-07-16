@@ -1,0 +1,6 @@
+# haproxy
+template {
+  source = "/etc/haproxy/haproxy.cmtpl"
+  destination = "/etc/haproxy/haproxy.cfg"
+  command = "service haproxy reload"
+}

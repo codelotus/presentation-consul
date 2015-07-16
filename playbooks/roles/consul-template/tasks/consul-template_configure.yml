@@ -1,0 +1,10 @@
+---
+
+- name: deploy consul template configuration
+  template: src=consul-template.conf.j2 dest=/etc/consul-template/consul-template.conf owner=root group=root mode=0644 backup=yes
+  notify: restart consul-template
+
+- name: deploy consul-template init.d configuration
+  template: src=consul-template.initd.j2 dest=/etc/init.d/consul-template owner=root group=root mode=0755
+
+- meta: flush_handlers

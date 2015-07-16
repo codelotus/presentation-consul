@@ -1,0 +1,6 @@
+---
+- name: Configure consul-template on all servers
+  hosts: all
+  sudo: true
+  roles:
+    - consul-template

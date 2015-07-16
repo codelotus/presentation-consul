@@ -1,0 +1,6 @@
+---
+- name: Configure Ansible Servers
+  hosts: tag_role_consul_server
+  sudo: true
+  roles:
+    - consul

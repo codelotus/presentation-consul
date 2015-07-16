@@ -1,0 +1,4 @@
+---
+
+- include: consul_install.yml
+- include: consul_configure.yml

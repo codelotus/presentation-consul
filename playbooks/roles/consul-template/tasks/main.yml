@@ -1,0 +1,5 @@
+---
+
+- include: consul-template_install.yml
+- include: consul-template_configure.yml
+- include: consul-template_service.yml

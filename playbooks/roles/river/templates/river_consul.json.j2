@@ -1,0 +1,19 @@
+{
+  "service": {
+    "id": "river",
+    "name": "web",
+    "tags": ["release"],
+    {% if app_environment != "development": %}
+      "address": "{{ ansible_eth0.ipv4.address }}",
+    {% else %}
+      "address": "{{ ansible_eth1.ipv4.address }}",
+    {% endif %}
+    "port": {{river_port}},
+    "checks": [
+      {
+        "script": "/opt/consul_checks/check_river.sh",
+        "interval": "10s"
+      }
+    ]
+  }
+}

@@ -1,0 +1,27 @@
+---
+
+- name: create consul user
+  user: name=consul shell=/bin/bash
+
+- name: download envconsul
+  copy:
+    src: "envconsul_0.5.0_linux_amd64.tar.gz"
+    dest: /tmp/envconsul_0.5.0_linux_amd64.tar.gz
+    mode: 0600
+
+- name: unzip envconsul
+  unarchive:
+    src: /tmp/envconsul_0.5.0_linux_amd64.tar.gz
+    dest: /tmp
+    copy: no
+    creates: /tmp/envconsul_0.5.0_linux_amd64/envconsul
+
+- name: copy envconsul to local bin
+  command: creates="/usr/local/bin/envconsul" cp  /tmp/envconsul_0.5.0_linux_amd64/envconsul /usr/local/bin/envconsul
+
+- name: set envconsul file attribltes
+  file:
+    path: /usr/local/bin/envconsul
+    owner: consul
+    group: root
+    mode: 0755

@@ -1,0 +1,33 @@
+- name: create consul user
+  user: name=consul shell=/bin/bash
+
+- name: download consul template
+  copy:
+    src: "consul-template_0.10.0_linux_amd64.tar.gz"
+    dest: /tmp
+    mode: 0600
+
+- name: unzip consul template
+  unarchive:
+    src: /tmp/consul-template_0.10.0_linux_amd64.tar.gz
+    dest: /tmp
+    copy: no
+    creates: /tmp/consul-template_0.10.0_linux_amd64
+
+- name: copy consul template to local bin
+  command: creates="/usr/local/bin/consul-template" cp /tmp/consul-template_0.10.0_linux_amd64/consul-template /usr/local/bin/consul-template
+
+- name: set consul template file attribltes
+  file:
+    path: /usr/local/bin/consul-template
+    owner: consul
+    group: root
+    mode: 0755
+
+- name: create consul-tempalte config directory
+  file:
+    path: /etc/consul-template
+    state: directory
+    owner: consul
+    group: root
+    mode: 0755

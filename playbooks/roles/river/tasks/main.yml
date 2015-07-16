@@ -1,0 +1,24 @@
+---
+
+- name: ensure appuser exists
+  user: name=appuser shell=/bin/bash state=present
+
+- name: create river deployment directory
+  file: path=/opt/applications state=directory mode=0755 owner=appuser group=root
+
+- name: upload river executable
+  copy: src=river_amd64 dest=/opt/applications/river owner=appuser group=appuser mode=0755
+
+- name: upload river initd script
+  template: src=river.initd.j2 dest=/etc/init.d/river owner=root group=root mode=0755
+
+- name: start river
+  service: name=river state=started
+
+- name: upload river consul check script
+  template: src=check_river.sh.j2 dest=/opt/consul_checks/check_river.sh owner=consul group=consul mode=0755
+
+- name: upload river consul service config
+  template: src=river_consul.json.j2 dest=/etc/consul.d/river_consul.json owner=consul group=consul mode=0664
+  notify:
+  - reload consul

@@ -1,0 +1,28 @@
+---
+
+- name: install base packages
+  yum: name={{ item }} state=present
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 6
+  with_items:
+     - unzip
+     - vim
+     - nc
+     - bind-utils
+     - openssl
+     - bind
+
+- name: install bind conf
+  copy: src=named.conf dest=/etc/named.conf owner=root group=named mode=0640
+  notify: restart named
+
+- name: install consul conf for bind
+  copy: src=consul.conf dest=/etc/named/consul.conf owner=root group=named mode=0640
+  notify: restart named
+
+#- name: install resolve conf
+#  copy: src=resolv.conf dest=/etc/resolv.conf owner=root group=root mode=644
+#  notify: restart named
+
+- name: install telnet for local development only
+  yum: name=telnet state=present
+  when: ansible_os_family == 'RedHat' and ansible_lsb.major_release|int == 6 and ansible_ssh_user == "vagrant"

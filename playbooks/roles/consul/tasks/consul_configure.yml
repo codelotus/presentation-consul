@@ -1,0 +1,28 @@
+---
+
+- name: create consul data directory
+  file: path=/opt/consul state=directory owner=consul group=consul
+
+- name: create consul configuration directory
+  file: path=/etc/consul.d state=directory owner=consul
+
+- name: install consul init script
+  template: src=consul.init.j2 dest=/etc/init.d/consul owner=root mode=0755
+
+#- name: install consul systemd config
+#  template: src=consul.service.j2 dest=/usr/lib/systemd/system/ owner=root mode=0755
+
+- name: install consul config file
+  template: src=consul.conf.j2 dest=/etc/consul.conf owner=consul mode=0640
+  notify:
+  - restart consul
+
+- name: enable consul service
+  command: service consul start
+  #command: systemctl enable consul.service
+  #args:
+  #  chdir: somedir/
+  #  creates: /path/to/database
+
+- name: create consul checks directory
+  file: path=/opt/consul_checks state=directory mode=0755

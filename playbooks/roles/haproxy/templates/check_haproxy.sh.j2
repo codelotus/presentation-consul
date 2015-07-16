@@ -1,0 +1,3 @@
+#! /bin/bash
+
+nc -z -w5 localhost {{haproxy_stats_port}}; exit $?

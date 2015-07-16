@@ -1,0 +1,28 @@
+
+[vagrant]
+vagrant1 ansible_ssh_user=vagrant ansible_ssh_host=127.0.0.1 ansible_ssh_port=64673 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+vagrant2 ansible_ssh_user=vagrant ansible_ssh_host=127.0.0.1 ansible_ssh_port=64674 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+vagrant3 ansible_ssh_user=vagrant ansible_ssh_host=127.0.0.1 ansible_ssh_port=64675 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
+
+
+[tag_role_consul_server]
+vagrant1
+
+[tag_role_consul_server:vars]
+app_environment=development
+
+[tag_role_consul_client]
+vagrant2
+vagrant3
+
+[tag_role_consul_client:vars]
+app_environment=development
+
+[tag_role_balancer]
+vagrant1
+
+[tag_role_appserverA]
+vagrant2
+
+[tag_role_appserverB]
+vagrant3

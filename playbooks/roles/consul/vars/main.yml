@@ -1,0 +1,6 @@
+---
+ca_file: ''
+cert_file: ''
+cert_key: ''
+acl_datacenter: 'vagrant-ds'
+acl_master_token: 'testing'

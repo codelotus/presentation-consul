@@ -1,0 +1,6 @@
+---
+- name: Configure common packages for all known servers
+  hosts: all
+  sudo: true
+  roles:
+    - common

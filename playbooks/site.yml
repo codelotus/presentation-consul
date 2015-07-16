@@ -1,0 +1,7 @@
+---
+- include: playbook_all_servers.yml
+- include: playbook_consul_server.yml
+- include: playbook_consul_client.yml
+- include: playbook_consul_template.yml
+- include: playbook_web_balancer.yml
+- include: playbook_appservers.yml

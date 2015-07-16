@@ -1,0 +1,33 @@
+---
+
+- name: create consul user
+  user: name=consul shell=/bin/bash
+
+- name: copy consul
+  copy:
+    src: consul_0.5.2_linux_amd64.zip
+    dest: /tmp/consul_0.5.2_linux_amd64.zip
+    mode: 0600
+
+- name: unzip consul to local bin directory
+  unarchive:
+    src: /tmp/consul_0.5.2_linux_amd64.zip
+    dest: /usr/local/bin
+    copy: no
+    creates: /usr/local/bin/consul
+
+- name: copy consul ui
+  copy:
+    src: consul_web_ui_0.5.2.zip
+    dest: /tmp/consul_web_ui_0.5.2.zip
+    mode: 0600
+
+- name: create consul ui directory
+  file: path=/opt/consul/ui state=directory mode=0755 owner=consul group=consul
+
+- name: unzip consul ui to opt directory
+  unarchive:
+    src: /tmp/consul_web_ui_0.5.2.zip
+    dest: /opt/consul/ui
+    copy: no
+    creates: /opt/consul/ui/dist

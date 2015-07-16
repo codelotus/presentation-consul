@@ -1,0 +1,10 @@
+---
+
+- name: reload-haproxy
+  service: name=haproxy state=reloaded
+
+- name: reload consul
+  service: name=consul state=reloaded
+
+- name: reload consul-template
+  service: name=consul-template state=restarted

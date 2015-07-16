@@ -1,0 +1,7 @@
+---
+- name: Configure Web Balancer
+  hosts: tag_role_balancer
+  sudo: true
+  roles:
+    - haproxy
+    - consul-template

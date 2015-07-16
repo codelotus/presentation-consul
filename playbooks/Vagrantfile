@@ -1,0 +1,38 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.box = "omalley/centos6_x64"
+
+  config.vm.define "vagrant1" do |vagrant1|
+    vagrant1.vm.network "private_network", ip: "10.0.3.15"
+    vagrant1.vm.network "forwarded_port", guest: 80, host: 8480
+    vagrant1.vm.network "forwarded_port", guest: 1936, host: 1936
+    vagrant1.vm.network "forwarded_port", guest: 8500, host: 8500
+    vagrant1.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", disabled: true
+    vagrant1.vm.network :forwarded_port, guest: 22, host: 64673, auto_correct: true
+    vagrant1.vm.provision "shell", path: "vagrant_provision.sh"
+    vagrant1.vm.hostname = "vagrant1.vm"
+  end
+
+  config.vm.define "vagrant2" do |vagrant2|
+    vagrant2.vm.network "private_network", ip: "10.0.3.16"
+    vagrant2.vm.network "forwarded_port", guest: 3000, host: 3000
+    vagrant2.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", disabled: true
+    vagrant2.vm.network :forwarded_port, guest: 22, host: 64674, auto_correct: true
+    vagrant2.vm.provision "shell", path: "vagrant_provision.sh"
+    vagrant2.vm.hostname = "vagrant2.vm"
+  end
+
+  config.vm.define "vagrant3" do |vagrant3|
+    vagrant3.vm.network "private_network", ip: "10.0.3.17"
+    vagrant3.vm.network :forwarded_port, guest: 22, host: 2222, id: "ssh", disabled: true
+    vagrant3.vm.network :forwarded_port, guest: 22, host: 64675, auto_correct: true
+    vagrant3.vm.provision "shell", path: "vagrant_provision.sh"
+    vagrant3.vm.hostname = "vagrant3.vm"
+  end
+
+end

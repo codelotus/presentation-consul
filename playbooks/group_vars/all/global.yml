@@ -1,0 +1,5 @@
+---
+
+ssl_host_key: /etc/pki/tls/private/host.key
+ssl_host_cert: /etc/pki/tls/certs/host.cert
+ssl_ca_cert: /etc/pki/CA/certs/ca.cert.pem
