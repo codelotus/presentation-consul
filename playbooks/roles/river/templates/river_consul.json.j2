@@ -3,11 +3,7 @@
     "id": "river",
     "name": "web",
     "tags": ["release"],
-    {% if app_environment != "development": %}
-      "address": "{{ ansible_eth0.ipv4.address }}",
-    {% else %}
-      "address": "{{ ansible_eth1.ipv4.address }}",
-    {% endif %}
+    "address": "{{ ansible_eth1.ipv4.address }}",
     "port": {{river_port}},
     "checks": [
       {
